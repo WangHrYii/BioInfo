@@ -14,3 +14,11 @@ Thumbs.db
 
 # 日志
 *.log
+
+# 教程生成数据与分析输出
+demo-data/
+results/
+__pycache__/
+.snakemake/
+.nextflow/
+work/

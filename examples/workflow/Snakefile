@@ -1,0 +1,27 @@
+configfile: "examples/workflow/config.yaml"
+
+SAMPLES = config["samples"]
+DATA = config["data_dir"]
+OUT = config["out_dir"]
+
+
+rule all:
+    input:
+        expand(OUT + "/{sample}.tsv", sample=SAMPLES)
+
+
+rule summarize:
+    input:
+        r1=DATA + "/{sample}_R1.fastq.gz",
+        r2=DATA + "/{sample}_R2.fastq.gz",
+        program="examples/fastq_summary.py"
+    output:
+        OUT + "/{sample}.tsv"
+    log:
+        OUT + "/{sample}.log"
+    threads: 1
+    resources:
+        mem_mb=256
+    shell:
+        "python {input.program:q} --sample {wildcards.sample:q} "
+        "--r1 {input.r1:q} --r2 {input.r2:q} --out {output:q} > {log:q} 2>&1"

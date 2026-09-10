@@ -1,0 +1,5 @@
+samples:
+  - control
+  - treated
+data_dir: demo-data
+out_dir: results/workflow
